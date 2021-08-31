@@ -14,12 +14,12 @@ extern "C" {
 ** used to make the header, and the header can be found at
 **   http://www.khronos.org/registry/egl
 **
-** Khronos $Git commit SHA1: dc0b58dca5 $ on $Git commit date: 2021-06-25 01:58:50 +0200 $
+** Khronos $Git commit SHA1: 745e9ad435 $ on $Git commit date: 2021-08-24 00:08:36 +0200 $
 */
 
 #include <EGL/eglplatform.h>
 
-#define EGL_EGLEXT_VERSION 20210629
+#define EGL_EGLEXT_VERSION 20210831
 
 /* Generated C header for:
  * API: egl
@@ -700,6 +700,8 @@ EGLAPI EGLBoolean EGLAPIENTRY eglQueryDisplayAttribEXT (EGLDisplay dpy, EGLint a
 #ifndef EGL_EXT_device_openwf
 #define EGL_EXT_device_openwf 1
 #define EGL_OPENWF_DEVICE_ID_EXT          0x3237
+#define EGL_OPENWF_OWN_HANDLES_EXT        0x3378
+#define EGL_OPENWF_DEVICE_EXT             0x333D
 #endif /* EGL_EXT_device_openwf */
 
 #ifndef EGL_EXT_device_persistent_id
@@ -861,6 +863,8 @@ EGLAPI const char *EGLAPIENTRY eglQueryOutputPortStringEXT (EGLDisplay dpy, EGLO
 #define EGL_EXT_output_openwf 1
 #define EGL_OPENWF_PIPELINE_ID_EXT        0x3238
 #define EGL_OPENWF_PORT_ID_EXT            0x3239
+#define EGL_OPENWF_PIPELINE_EXT           0x3379
+#define EGL_OPENWF_PORT_EXT               0x337A
 #endif /* EGL_EXT_output_openwf */
 
 #ifndef EGL_EXT_pixel_format_float

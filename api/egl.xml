@@ -829,7 +829,8 @@
         <enum value="0x333A" name="EGL_COLOR_COMPONENT_TYPE_FIXED_EXT"/>
         <enum value="0x333B" name="EGL_COLOR_COMPONENT_TYPE_FLOAT_EXT"/>
         <enum value="0x333C" name="EGL_DRM_MASTER_FD_EXT"/>
-            <unused start="0x333D" end="0x333E"/>
+        <enum value="0x333D" name="EGL_OPENWF_DEVICE_EXT"/>
+            <unused start="0x333E"/>
         <enum value="0x333F" name="EGL_GL_COLORSPACE_BT2020_LINEAR_EXT"/>
         <enum value="0x3340" name="EGL_GL_COLORSPACE_BT2020_PQ_EXT"/>
         <enum value="0x3341" name="EGL_SMPTE2086_DISPLAY_PRIMARY_RX_EXT"/>
@@ -882,7 +883,10 @@
         <enum value="0x3375" name="EGL_STREAM_IMAGE_REMOVE_NV"/>
         <enum value="0x3376" name="EGL_STREAM_IMAGE_AVAILABLE_NV"/>
         <enum value="0x3377" name="EGL_DRM_RENDER_NODE_FILE_EXT"/>
-            <unused start="0x3378" end="0x339F"/>
+        <enum value="0x3378" name="EGL_OPENWF_OWN_HANDLES_EXT"/>
+        <enum value="0x3379" name="EGL_OPENWF_PIPELINE_EXT"/>
+        <enum value="0x337A" name="EGL_OPENWF_PORT_EXT"/>
+            <unused start="0x337B" end="0x339F"/>
     </enums>
 
     <enums namespace="EGL" start="0x33A0" end="0x33AF" vendor="ANGLE" comment="Reserved for Shannon Woods (Bug 13175)">
@@ -2435,6 +2439,8 @@
         <extension name="EGL_EXT_device_openwf" supported="egl">
             <require>
                 <enum name="EGL_OPENWF_DEVICE_ID_EXT"/>
+                <enum name="EGL_OPENWF_OWN_HANDLES_EXT"/>
+                <enum name="EGL_OPENWF_DEVICE_EXT"/>
             </require>
         </extension>
         <extension name="EGL_EXT_device_query" supported="egl">
@@ -2566,6 +2572,8 @@
             <require>
                 <enum name="EGL_OPENWF_PIPELINE_ID_EXT"/>
                 <enum name="EGL_OPENWF_PORT_ID_EXT"/>
+                <enum name="EGL_OPENWF_PIPELINE_EXT"/>
+                <enum name="EGL_OPENWF_PORT_EXT"/>
             </require>
         </extension>
         <extension name="EGL_EXT_pixel_format_float" supported="egl">

@@ -13,6 +13,7 @@ Contributors
     Daniel Kartch
     James Jones
     Christopher James Halse Rogers
+    Maniraj D
 
 Contacts
 
@@ -24,7 +25,7 @@ Status
 
 Version
 
-    Version 5 - January 21, 2016
+    Version 6 - August 31, 2021
 
 Number
 
@@ -87,6 +88,8 @@ New Tokens
         Accepted as the <attribute> parameter of eglQueryDeviceAttribEXT
 
         EGL_OPENWF_DEVICE_ID_EXT                0x3237
+        EGL_OPENWF_OWN_HANDLES_EXT              0x3378
+        EGL_OPENWF_DEVICE_EXT                   0x333D
 
         If EGL_EXT_platform_device is present, the following is accepted
         in the <attrib_list> of eglGetPlatformDisplayEXT().
@@ -100,10 +103,20 @@ New Tokens
 
         EGL_OPENWF_PIPELINE_ID_EXT              0x3238
 
+        Accepted as the <attribute> parameter of eglQueryOutputLayerAttribEXT
+        and eglOutputLayerAttribEXT
+
+        EGL_OPENWF_PIPELINE_EXT                 0x3379
+
         Accepted in the <attrib_list> of eglGetOutputPortsEXT and as
         the <attribute> parameter of eglQueryOutputPortAttribEXT
 
         EGL_OPENWF_PORT_ID_EXT                  0x3239
+
+        Accepted as the <attribute> parameter of eglQueryOutputPortAttribEXT
+        and eglOutputPortAttribEXT
+
+        EGL_OPENWF_PORT_EXT                     0x337A
 
 New Behavior for EXT_device_openwf
 
@@ -112,6 +125,21 @@ New Behavior for EXT_device_openwf
     To obtain a WFD_DEVICE_ID for an EGLDeviceEXT, call
     eglQueryDeviceAtribEXT with <attribute> set to
     EGL_OPENWF_DEVICE_ID_EXT.
+
+    To check whether the EGL creates and owns the OpenWF
+    handles, call eglQueryDeviceAtribEXT with <attribute>
+    set to EGL_OPENWF_OWN_HANDLES_EXT.
+
+    If the queried EGL_OPENWF_OWN_HANDLES_EXT attribute
+    value is EGL_TRUE, application can query the WFDDevice handle
+    corresponding to the EGLDevice by calling eglQueryDeviceAtribEXT
+    with <attribute> set to EGL_OPENWF_DEVICE_EXT.
+
+    If the queried EGL_OPENWF_OWN_HANDLES_EXT attribute
+    value is EGL_FALSE, application has to create the
+    WFDDevice handle with the device ID returned by querying
+    EGL_OPENWF_DEVICE_ID_EXT and set it to <attribute_list>
+    of eglGetPlatformDisplayEXT.
 
 If EGL_EXT_platform_device is present, replace the last sentence of the
 third paragraph in section 3.2 "Initialization" with the following:
@@ -128,11 +156,9 @@ third paragraph in section 3.2 "Initialization" with the following:
     EGL may require the use of the OpenWF device beyond the duration of
     the call to eglGetPlatformDisplayEXT().  The application must ensure
     the device handle remains valid for the lifetime of the display
-    returned.  If no OpenWF device handle is specified and EGL requires
-    one, it will attempt to create the device itself.  Applications
-    should only need to specify an OpenWF device in situations where EGL
-    may fail to create one itself due to an existing instance of the same
-    underlying device in the process.
+    returned. Applications should need to specify an OpenWF device only
+    when the EGL_OPENWF_OWN_HANDLES_EXT attribute queried from the
+    specified EGLDevice is EGL_FALSE.
 
 New Behavior for EXT_output_openwf
 
@@ -150,6 +176,23 @@ New Behavior for EXT_output_openwf
         Attribute                   Type      Access
         --------------------------  -------   ------
         EGL_OPENWF_PORT_ID_EXT      integer   S|R
+
+    If EGL_OPENWF_OWN_HANDLES_EXT attribute queried from the
+    EGLDevice is EGL_FALSE, application can create the OpenWF pipeline
+    and port handles itself and share them with EGL. Otherwise the handles
+    need to be queried from EGL.
+
+    Add to Table 3.10.3.1 in EGL_EXT_output_base:
+
+        Attribute                   Type      Access
+        --------------------------  -------   ------
+        EGL_OPENWF_PIPELINE_EXT     integer   R|W
+
+    Add to Table 3.10.3.2 in EGL_EXT_output_base:
+
+        Attribute                   Type      Access
+        --------------------------  -------   ------
+        EGL_OPENWF_PORT_EXT         integer   R|W
 
 Issues
 
@@ -176,7 +219,7 @@ Issues
         d)  Require the application to provide its OpenWF device handle
             if it has one.
 
-        RESOLVED: (d), though implementations are free to use (a) when
+        RESOLVED: (c), though implementations are free to use (a) whe
         possible.
 
     2.  Should different values of EGL_OPENWF_DEVICE_EXT result in separate
@@ -193,7 +236,7 @@ Issues
                                           attr1);
 
         ...
-                                
+
           dpy2 = eglGetPlatformDisplayEXT(EGL_PLATFORM_DEVICE_EXT,
                                           eglDev,
                                           NULL);
@@ -207,6 +250,9 @@ Issues
         between modules before creating EGL displays.
 
 Revision History:
+
+    #6  (August 31st, 2021) Maniraj D
+        - Generalized the extension as per the solution (c) to issue 1.
 
     #5  (January 21st, 2016) James Jones
         - Add EGL_OPENWF_DEVICE_EXT to resolve issue 1.
